@@ -1,4 +1,5 @@
 from random import choice
+import sys
 
 
 def open_and_read_file(file_path):
@@ -48,20 +49,26 @@ def make_text(chains):
 
     text = ""
 
-    digram = choice(chains.keys()) #this selects a random key (tuple) from chains (starting point)
-    text = text + " " + digram[0] + " " + digram[1]
-    while True:
-        try:
-            digram = digram[1], choice(chains[digram])
+    capdigrams = [k for k in chains.keys() if k[0][0].isupper()]
+    #print capdigrams
+    digram = choice(capdigrams)
+    #digram = choice(chains.keys()) #this selects a random key (tuple) from chains (starting point)
+    #text = initial_digram[0] + " " + initial_digram[1] 
+    text = digram[0] + " " + digram[1] #adds initial words to text string
+    #print text
+    while True: #loop until we break!
+        try: #This try/except clause is intended to protect against digram tuples not existing in chains dictionary
+            digram = digram[1], choice(chains[digram]) #constructs new diagram with latter half of previous + random value
             text = text + " " + digram[1]
-        except KeyError:
+        except KeyError: 
             break
-        print digram
+        #print digram
 
     return text
 
 
-input_path = "green-eggs.txt"
+#input_path = "green-eggs.txt"
+input_path = sys.argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
