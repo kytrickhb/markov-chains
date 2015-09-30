@@ -71,20 +71,19 @@ def make_arbitrary_text(chains, n):
     """The n indicates the length of the keys"""
         
     text = ""
-
-    ngram = choice(chains.keys()) #select a random key, and assign it to ngram
+    capngrams = [k for k in chains.keys() if k[0][0].isupper()]
+    ngram = choice(capngrams) #force the initial text to be capital
+    #ngram = choice(chains.keys()) #select a random key, and assign it to ngram
     #print ngram
     #print chains[ngram] # list of possible next words
     #print choice(chains[ngram]) # chose a next word out of the possible elements in the list
 
     text = " ".join(ngram) + " " + choice(chains[ngram]) #constructs text
 
-    while True:
+    while True: #try to construct an ngram.  If unable, it means it dictionary didn't have what you wanted.
         try:
             ngram = ngram[1:] + (choice(chains[ngram]),) #constructs new ngram tuple
-            #print ngram
-            #text = text + " " + " ".join(ngram) #adds new text to existing text string
-            text = text + " " + choice(chains[ngram])
+            text = text + " " + choice(chains[ngram]) #adds new word to existing text string
         except KeyError:
             break
 
