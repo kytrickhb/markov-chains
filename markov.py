@@ -52,7 +52,7 @@ def make_arbitrary_chains(text_string, n):
         word_list.append(word)
 
     # construct a dictionary with n-grams
-    for i in range(len(word_list) - n- 1):
+    for i in range(len(word_list) - n):
         temp_ngram = tuple(word_list[i:i+n])
         if temp_ngram not in chains:
             chains[temp_ngram] = [word_list[i+n]]
@@ -66,12 +66,11 @@ def make_arbitrary_chains(text_string, n):
         #     print chains
 
 
-def make_arbitrary_text(chains, n):
+def make_arbitrary_text(chains):
     """Takes a dictionary of markov chains and an integer and returns random text."""
-    """The n indicates the length of the keys"""
-        
+    """The n indicates the length of the keys"""    
     text = ""
-    capngrams = [k for k in chains.keys() if k[0][0].isupper()]
+    capngrams = [k for k in chains.keys() if k[0][0].isupper()] #generate list of only upper case ngrams.
     ngram = choice(capngrams) #force the initial text to be capital
     #ngram = choice(chains.keys()) #select a random key, and assign it to ngram
     #print ngram
@@ -79,6 +78,8 @@ def make_arbitrary_text(chains, n):
     #print choice(chains[ngram]) # chose a next word out of the possible elements in the list
 
     text = " ".join(ngram) + " " + choice(chains[ngram]) #constructs text
+    #text = ngram
+
 
     while True: #try to construct an ngram.  If unable, it means it dictionary didn't have what you wanted.
         try:
@@ -123,5 +124,5 @@ chains = make_arbitrary_chains(input_text, input_number)
 
 # Produce random text
 #random_text = make_text(chains)
-random_text = make_arbitrary_text(chains, input_number)
+random_text = make_arbitrary_text(chains)
 print random_text
