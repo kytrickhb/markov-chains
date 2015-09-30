@@ -83,21 +83,11 @@ def make_arbitrary_text(chains, n):
         try:
             ngram = ngram[1:] + (choice(chains[ngram]),) #constructs new ngram tuple
             #print ngram
-            text = text + " " + " ".join(ngram)
+            #text = text + " " + " ".join(ngram) #adds new text to existing text string
+            text = text + " " + choice(chains[ngram])
         except KeyError:
             break
 
-
-    # for i in range(len(ngram)): #loop
-    #     text = text + " " + ngram[i]
-    
-    #print ngram[1:-1]
-    # while True:
-    #     try:
-    #         ngram = tuple(ngram[1:-1]) + tuple(choice(chains[ngram]))
-    #         text = text + " " + ngram
-    #     except KeyError:
-    #         break
     return text
 
 
