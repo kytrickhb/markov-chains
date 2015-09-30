@@ -67,20 +67,31 @@ def make_arbitrary_chains(text_string, n):
 
 
 def make_arbitrary_text(chains, n):
+    """Takes a dictionary of markov chains and an integer and returns random text."""
+    """The n indicates the length of the keys"""
         
     text = ""
 
     ngram = choice(chains.keys()) #select a random key, and assign it to ngram
-    print ngram
-    print chains[ngram]
-    print choice(chains[ngram])
+    #print ngram
+    #print chains[ngram] # list of possible next words
+    #print choice(chains[ngram]) # chose a next word out of the possible elements in the list
 
-    text = " ".join(ngram) + " " + choice(chains[ngram])
+    text = " ".join(ngram) + " " + choice(chains[ngram]) #constructs text
+
+    while True:
+        try:
+            ngram = ngram[1:] + (choice(chains[ngram]),) #constructs new ngram tuple
+            #print ngram
+            text = text + " " + " ".join(ngram)
+        except KeyError:
+            break
+
 
     # for i in range(len(ngram)): #loop
     #     text = text + " " + ngram[i]
     
-    pring ngram[1:-1]
+    #print ngram[1:-1]
     # while True:
     #     try:
     #         ngram = tuple(ngram[1:-1]) + tuple(choice(chains[ngram]))
